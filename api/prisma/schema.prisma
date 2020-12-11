@@ -1,0 +1,45 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://docker:docker@localhost:5304/pwnag"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String    @id @default(cuid())
+  email    String    @unique
+  password String
+  username String
+  isOnline Boolean   @default(false)
+  Post     Post[]
+  Comment  Comment[]
+  Like     Like[]
+}
+
+model Post {
+  id       String    @id @default(cuid())
+  content  String
+  User     User      @relation(fields: [authorId], references: [id])
+  authorId String
+  Comment  Comment[]
+  Like     Like[]
+}
+
+model Comment {
+  id      String @id @default(cuid())
+  message String
+  Post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  User    User   @relation(fields: [userId], references: [id])
+  userId  String
+}
+
+model Like {
+  id     String @id @default(cuid())
+  Post   Post   @relation(fields: [postId], references: [id])
+  postId String
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+}
