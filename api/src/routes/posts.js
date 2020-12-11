@@ -1,13 +1,13 @@
 import { Router } from 'express'
 
-import { Create, Delete, Find, Patch } from '../controllers'
+import { CreatePost, DeletePost, FindPost, PatchPost } from '../controllers'
 import Authorization from '../guards/Authorization'
 
 const router = new Router()
 
-router.post('/', Authorization, Create)
-router.get('/', Authorization, Find)
-router.delete('/:id', Authorization, Delete)
-router.patch('/:id', Authorization, Patch)
+router.post('/', Authorization, CreatePost)
+router.get('/', Authorization, FindPost)
+router.delete('/:id', Authorization, DeletePost)
+router.patch('/:id', Authorization, PatchPost)
 
 export default router
