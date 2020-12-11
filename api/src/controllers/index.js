@@ -11,3 +11,5 @@ export { default as PatchPost } from './posts/Patch'
 export { default as CreateComment } from './comments/Create'
 export { default as DeleteComment } from './comments/Delete'
 export { default as PatchComment } from './comments/Patch'
+// Users controllers
+export { default as FindOnlineUsers } from './users/Find'

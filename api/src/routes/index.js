@@ -4,3 +4,5 @@ export { default as authRouter } from './auth'
 export { default as postsRouter } from './posts'
 // Comments router
 export { default as commentsRouter } from './comments'
+// Users router
+export { default as usersRouter } from './users'
