@@ -61,7 +61,7 @@ const Panel = () => {
             <SimpleGrid columns={1} spacing={12}>
                 <CreatePost />
                 {data.map(post => {
-                    return <Post post={post} currentUser={currentUser} />
+                    return <Post key={post.id} post={post} currentUser={currentUser} />
                 })}
             </SimpleGrid>
         </Container>

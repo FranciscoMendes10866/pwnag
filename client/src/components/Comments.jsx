@@ -1,12 +1,13 @@
-import { Box, Flex, Avatar, Badge, Text, Button, Collapse } from '@chakra-ui/react'
-import { RiDeleteBin6Fill, RiEditBoxLine } from 'react-icons/ri'
+import { Box, Flex, Avatar, Badge, Text, Collapse } from '@chakra-ui/react'
+
+import { CommentModal, DeleteModal } from '.'
 
 const Comments = ({ showComments, postComments, currentUser }) => {
     return (
         <Collapse startingHeight={0} in={showComments}>
             {postComments.map(comment => {
                 return (
-                    <Box p="6" borderWidth="1px" borderRadius={8} mt={4} mb={4}>
+                    <Box key={comment.id} p="6" borderWidth="1px" borderRadius={8} mt={4} mb={4}>
                         <Flex justifyContent="space-between">
                             <Flex>
                                 <Avatar size="md" src="https://bit.ly/3nqaxnQ" />
@@ -29,12 +30,8 @@ const Comments = ({ showComments, postComments, currentUser }) => {
                             </Flex>
                             {currentUser === comment.User.id && (
                                 <Flex>
-                                    <Button variant="ghost" size="sm" colorScheme="blue">
-                                        <RiEditBoxLine />
-                                    </Button>
-                                    <Button variant="ghost" ml={2} size="sm" colorScheme="pink">
-                                        <RiDeleteBin6Fill />
-                                    </Button>
+                                    <CommentModal singleComment={comment} />
+                                    <DeleteModal singleId={comment.id} />
                                 </Flex>
                             )}
                         </Flex>

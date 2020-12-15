@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Box, Flex, Avatar, Text, Badge, Button, Divider, ButtonGroup } from '@chakra-ui/react'
-import { RiDeleteBin6Fill, RiEditBoxLine } from 'react-icons/ri'
 
-import { CommentPost, Comments } from '../components'
+import { CommentPost, Comments, PostModal, DeleteModal } from '../components'
 
 const Panel = ({ post, currentUser }) => {
     const [showCreate, setShowCreate] = useState(false)
@@ -38,12 +37,8 @@ const Panel = ({ post, currentUser }) => {
                     </Flex>
                     {currentUser === post.User.id && (
                         <Flex>
-                            <Button variant="ghost" size="sm" colorScheme="blue">
-                                <RiEditBoxLine />
-                            </Button>
-                            <Button variant="ghost" ml={2} size="sm" colorScheme="pink">
-                                <RiDeleteBin6Fill />
-                            </Button>
+                            <PostModal singlePost={post} />
+                            <DeleteModal singleId={post.id} />
                         </Flex>
                     )}
                 </Flex>
