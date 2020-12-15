@@ -35,6 +35,9 @@ const Navbar = () => {
                 <Button as={Link} to="/sign-in" colorScheme="purple" variant="ghost" mr="4">
                     Sign in
                 </Button>
+                <Button colorScheme="purple" variant="ghost" mr="4">
+                    Sign out
+                </Button>
                 <Button colorScheme="purple" ml="4" onClick={toggleColorMode}>
                     {colorMode === "light" ? <HiColorSwatch /> : <HiOutlineColorSwatch />}
                     &nbsp;{colorMode === "light" ? "Dark" : "Light"}

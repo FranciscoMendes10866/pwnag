@@ -4,7 +4,7 @@ import { RiDeleteBin6Fill, RiEditBoxLine } from 'react-icons/ri'
 
 import { CommentPost, Comments } from '../components'
 
-const Panel = () => {
+const Panel = ({ post, currentUser }) => {
     const [showCreate, setShowCreate] = useState(false)
     const [showComments, setShowComments] = useState(false)
     const handleCreate = () => setShowCreate(!showCreate)
@@ -21,26 +21,34 @@ const Panel = () => {
                         <Avatar src="https://bit.ly/3mmsW3w" />
                         <Box ml="3">
                             <Text fontWeight="bold">
-                                franciscomendes97
+                                {post.User.username}
                             </Text>
                             <Text fontSize="sm">
-                                <Badge ml="1" colorScheme="purple">
-                                    Online
-                                </Badge>
+                                {post.User.isOnline ? (
+                                    <Badge ml="1" colorScheme="purple">
+                                        Online
+                                    </Badge>
+                                ) : (
+                                        <Badge ml="1">
+                                            Offline
+                                        </Badge>
+                                    )}
                             </Text>
                         </Box>
                     </Flex>
-                    <Flex>
-                        <Button variant="ghost" size="sm" colorScheme="blue">
-                            <RiEditBoxLine />
-                        </Button>
-                        <Button variant="ghost" ml={2} size="sm" colorScheme="pink">
-                            <RiDeleteBin6Fill />
-                        </Button>
-                    </Flex>
+                    {currentUser === post.User.id && (
+                        <Flex>
+                            <Button variant="ghost" size="sm" colorScheme="blue">
+                                <RiEditBoxLine />
+                            </Button>
+                            <Button variant="ghost" ml={2} size="sm" colorScheme="pink">
+                                <RiDeleteBin6Fill />
+                            </Button>
+                        </Flex>
+                    )}
                 </Flex>
                 <Text mt={8} fontSize="xl" fontWeight="regular" lineHeight="short">
-                    This space is where you will see the content of each post.
+                    {post.content}
                 </Text>
                 <Flex align="center" mt={8} justifyContent="center">
                     <ButtonGroup isAttached variant="outline">
@@ -51,7 +59,11 @@ const Panel = () => {
                 <Divider mb={4} mt={4} />
                 <CommentPost showCreate={showCreate} />
                 {common}
-                <Comments showComments={showComments} />
+                <Comments
+                    showComments={showComments}
+                    postComments={post.Comment}
+                    currentUser={currentUser}
+                />
             </Box>
         </Box>
     )
