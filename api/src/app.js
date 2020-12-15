@@ -7,8 +7,7 @@ import compression from 'compression'
 import {
     authRouter,
     postsRouter,
-    commentsRouter,
-    usersRouter
+    commentsRouter
 } from './routes'
 
 const app = express()
@@ -21,6 +20,5 @@ app.use(compression())
 app.use('/api/auth', authRouter)
 app.use('/api/posts', postsRouter)
 app.use('/api/comments', commentsRouter)
-app.use('/api/users', usersRouter)
 
 export default app

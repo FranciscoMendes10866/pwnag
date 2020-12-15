@@ -5,6 +5,13 @@ const Find = async (req, res) => {
         select: {
             id: true,
             content: true,
+            User: {
+                select: {
+                    id: true,
+                    username: true,
+                    isOnline: true,
+                }
+            },
             Comment: {
                 select: {
                     id: true,
@@ -13,6 +20,7 @@ const Find = async (req, res) => {
                         select: {
                             id: true,
                             username: true,
+                            isOnline: true,
                         }
                     }
                 }
