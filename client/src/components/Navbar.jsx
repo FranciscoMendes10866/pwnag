@@ -1,4 +1,4 @@
-import { Flex, Box, Button, Heading, useColorMode } from '@chakra-ui/react'
+import { Flex, Box, Button, Heading, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import { DiMaterializecss } from 'react-icons/di'
 import { HiColorSwatch, HiOutlineColorSwatch } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
@@ -6,8 +6,14 @@ import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const { colorMode, toggleColorMode } = useColorMode()
+    const bg = useColorModeValue("white", "gray.800")
     return (
         <Flex
+            position="fixed"
+            backgroundColor={bg}
+            width="100%"
+            zIndex="999"
+            shadow="sm"
             justify="space-between"
             align="center"
             direction="row"
@@ -20,6 +26,9 @@ const Navbar = () => {
                 </Heading>
             </Box>
             <Box>
+                <Button as={Link} to="/panel" colorScheme="purple" variant="ghost" mr="4">
+                    Home
+                </Button>
                 <Button as={Link} to="/" colorScheme="purple" variant="ghost" mr="4">
                     Sign up
                 </Button>

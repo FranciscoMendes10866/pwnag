@@ -1,1 +1,5 @@
 export { default as Navbar } from './Navbar'
+export { default as Post } from './Post'
+export { default as CommentPost } from './CommentPost'
+export { default as Comments } from './Comments'
+export { default as CreatePost } from './CreatePost'
