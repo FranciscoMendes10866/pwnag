@@ -35,7 +35,8 @@ const SignIn = async (req, res) => {
 
     return res.json({
         token,
-        username: exists.username
+        username: exists.username,
+        id: exists.id
     })
 }
 

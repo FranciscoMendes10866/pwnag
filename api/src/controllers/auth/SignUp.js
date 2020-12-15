@@ -30,7 +30,8 @@ const SignUp = async (req, res) => {
 
     return res.json({
         token,
-        username: create.username
+        username: create.username,
+        id: create.id
     })
 }
 
