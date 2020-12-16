@@ -1,7 +1,40 @@
 import { Flex, Box, Text, Container, FormControl, FormLabel, Input, Button, SimpleGrid } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
+import axios from '../utils/axios'
+import { useStore } from '../store'
 
 const Home = () => {
+    const history = useHistory()
+    const { setToken, setUsername, setCurrentUser } = useStore()
+    const [form, setForm] = useState({
+        username: '',
+        email: '',
+        password: ''
+    })
+    const handleOnChange = (e) => {
+        setForm({ ...form, [e.target.id]: e.target.value })
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        await axios.post('sign_up', form)
+            .then(({ data }) => {
+                if (data.token) {
+                    setToken(data.token)
+                    setUsername(data.username)
+                    setCurrentUser(data.id)
+                    history.push('/panel')
+                }
+            })
+            .catch(err => console.log(err))
+        setForm({
+            username: '',
+            email: '',
+            password: ''
+        })
+    }
     return (
         <Container maxW="4xl">
             <Flex minH="calc(100vh - 56px)" w="full" justifyContent="center" align="center">
@@ -42,8 +75,10 @@ const Home = () => {
                                         <FormControl>
                                             <FormLabel>Username</FormLabel>
                                             <Input
+                                                value={form.username}
+                                                onChange={handleOnChange}
+                                                id="username"
                                                 focusBorderColor="purple.200"
-                                                name="username"
                                                 type='text'
                                                 placeholder='Enter your username'
                                             />
@@ -51,8 +86,10 @@ const Home = () => {
                                         <FormControl mt={4}>
                                             <FormLabel>Email</FormLabel>
                                             <Input
+                                                value={form.email}
+                                                onChange={handleOnChange}
+                                                id="email"
                                                 focusBorderColor="purple.200"
-                                                name="email"
                                                 type='email'
                                                 placeholder='Enter your email address'
                                             />
@@ -60,13 +97,16 @@ const Home = () => {
                                         <FormControl mt={4}>
                                             <FormLabel>Password</FormLabel>
                                             <Input
+                                                value={form.password}
+                                                onChange={handleOnChange}
+                                                id="password"
                                                 focusBorderColor="purple.200"
-                                                name="password"
                                                 type='password'
                                                 placeholder='Enter your password'
                                             />
                                         </FormControl>
                                         <Button
+                                            onClick={handleSubmit}
                                             width='full'
                                             mt={6}
                                             colorScheme="purple"

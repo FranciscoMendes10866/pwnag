@@ -1,7 +1,38 @@
 import { Flex, Box, Text, Container, FormControl, FormLabel, Input, Button, SimpleGrid } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
+import axios from '../utils/axios'
+import { useStore } from '../store'
 
 const SignInPage = () => {
+    const history = useHistory()
+    const { setToken, setUsername, setCurrentUser } = useStore()
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+    })
+    const handleOnChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+    const handleOnSubmit = async (e) => {
+        e.preventDefault()
+        await axios.post('sign_in', form)
+            .then(({ data }) => {
+                if (data.token) {
+                    setToken(data.token)
+                    setUsername(data.username)
+                    setCurrentUser(data.id)
+                    history.push('/panel')
+                }
+            })
+            .catch(err => console.log(err))
+        setForm({
+            email: '',
+            password: ''
+        })
+    }
     return (
         <Container maxW="4xl">
             <Flex minH="calc(100vh - 56px)" w="full" justifyContent="center" align="center">
@@ -42,6 +73,8 @@ const SignInPage = () => {
                                         <FormControl>
                                             <FormLabel>Email</FormLabel>
                                             <Input
+                                                onChange={handleOnChange}
+                                                value={form.email}
                                                 focusBorderColor="purple.200"
                                                 name="email"
                                                 type='email'
@@ -51,6 +84,8 @@ const SignInPage = () => {
                                         <FormControl mt={4}>
                                             <FormLabel>Password</FormLabel>
                                             <Input
+                                                onChange={handleOnChange}
+                                                value={form.password}
                                                 focusBorderColor="purple.200"
                                                 name="password"
                                                 type='password'
@@ -58,6 +93,7 @@ const SignInPage = () => {
                                             />
                                         </FormControl>
                                         <Button
+                                            onClick={handleOnSubmit}
                                             width='full'
                                             mt={6}
                                             colorScheme="purple"

@@ -1,9 +1,10 @@
 import { Container, SimpleGrid } from '@chakra-ui/react'
 
 import { Post, CreatePost } from '../components'
+import { useStore } from '../store'
 
 const Panel = () => {
-    const currentUser = 'ckikg80le0002rp3vzx04wnof'
+    const currentUser = useStore(state => state.currentUser)
     const data = [
         {
             "id": "ckiki4wzg0000k03ve435dwyg",
