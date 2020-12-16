@@ -1,6 +1,6 @@
 import { Box, Flex, Avatar, Badge, Text, Collapse } from '@chakra-ui/react'
 
-import { CommentModal, DeleteModal } from '.'
+import { CommentModal, DeletePostModal } from '.'
 
 const Comments = ({ showComments, postComments, currentUser }) => {
     return (
@@ -10,7 +10,7 @@ const Comments = ({ showComments, postComments, currentUser }) => {
                     <Box key={comment.id} p="6" borderWidth="1px" borderRadius={8} mt={4} mb={4}>
                         <Flex justifyContent="space-between">
                             <Flex>
-                                <Avatar size="md" src="https://bit.ly/3nqaxnQ" />
+                                <Avatar size="md" src="" />
                                 <Box ml="3">
                                     <Text fontWeight="bold">
                                         {comment.User.username}
@@ -31,7 +31,7 @@ const Comments = ({ showComments, postComments, currentUser }) => {
                             {currentUser === comment.User.id && (
                                 <Flex>
                                     <CommentModal singleComment={comment} />
-                                    <DeleteModal singleId={comment.id} />
+                                    <DeletePostModal singleId={comment.id} />
                                 </Flex>
                             )}
                         </Flex>

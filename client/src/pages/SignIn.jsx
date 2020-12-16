@@ -18,7 +18,7 @@ const SignInPage = () => {
     }
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        await axios.post('sign_in', form)
+        await axios.post('auth/sign_in', form)
             .then(({ data }) => {
                 if (data.token) {
                     setToken(data.token)

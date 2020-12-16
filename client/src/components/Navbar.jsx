@@ -15,7 +15,7 @@ const Navbar = () => {
     const stateToken = useStore(state => state.token)
     const handleSignOut = async (e) => {
         e.preventDefault()
-        await axios.patch('sign_out', {}, {
+        await axios.patch('auth/sign_out', {}, {
             headers: {
                 authorization: `Bearer ${stateToken}`
             }
@@ -25,7 +25,7 @@ const Navbar = () => {
                     setToken('')
                     setUsername('')
                     setCurrentUser('')
-                    history.push('/')
+                    history.push('/sign-in')
                 }
             })
             .catch(err => console.log(err))

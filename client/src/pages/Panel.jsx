@@ -1,69 +1,33 @@
 import { Container, SimpleGrid } from '@chakra-ui/react'
+import { useQuery } from 'react-query'
 
-import { Post, CreatePost } from '../components'
+import { Post, CreatePost, PostMessages } from '../components'
 import { useStore } from '../store'
+import Find from '../handlers/Find'
 
 const Panel = () => {
     const currentUser = useStore(state => state.currentUser)
-    const data = [
-        {
-            "id": "ckiki4wzg0000k03ve435dwyg",
-            "content": "Updated second post.",
-            "User": {
-                "id": "ckikg80le0002rp3vzx04wnof",
-                "username": "franciscomendes97",
-                "isOnline": true
-            },
-            "Comment": [
-                {
-                    "id": "ckiq7o9eo0060843vu01b0xdg",
-                    "message": "Comment to second post.",
-                    "User": {
-                        "id": "ckiq7li490013843vsx5fjl1s",
-                        "username": "rogermercs99",
-                        "isOnline": false
-                    }
-                }
-            ]
-        },
-        {
-            "id": "ckiq7m96a0023843vlhel0zq3",
-            "content": "Roger Post.",
-            "User": {
-                "id": "ckiq7li490013843vsx5fjl1s",
-                "username": "rogermercs99",
-                "isOnline": false
-            },
-            "Comment": [
-                {
-                    "id": "ckiq7nes70046843vdhnf386p",
-                    "message": "Comment to roger post.",
-                    "User": {
-                        "id": "ckikg80le0002rp3vzx04wnof",
-                        "username": "franciscomendes97",
-                        "isOnline": true
-                    }
-                },
-                {
-                    "id": "ckiq8lxg20005ep3vi4zgqxom",
-                    "message": "I commented on Roger's post.",
-                    "User": {
-                        "id": "ckiq8l30u0001ep3v9bwdawiu",
-                        "username": "joaogomes98",
-                        "isOnline": true
-                    }
-                }
-            ]
-        }
-    ]
-
+    const stateToken = useStore(state => state.token)
+    const { data, isError, isLoading, isFetching, isFetched, refetch } = useQuery(['posts', { token: stateToken }], Find)
     return (
         <Container py={24}>
             <SimpleGrid columns={1} spacing={12}>
-                <CreatePost />
-                {data.map(post => {
-                    return <Post key={post.id} post={post} currentUser={currentUser} />
-                })}
+                <CreatePost refetch={refetch} />
+                <PostMessages
+                    isError={isError}
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                />
+                {isFetched && (
+                    data.data.map(post => {
+                        return <Post
+                            key={post.id}
+                            post={post}
+                            currentUser={currentUser}
+                            refetch={refetch}
+                        />
+                    })
+                )}
             </SimpleGrid>
         </Container>
     )

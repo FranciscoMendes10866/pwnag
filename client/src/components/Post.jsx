@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Box, Flex, Avatar, Text, Badge, Button, Divider, ButtonGroup } from '@chakra-ui/react'
 
-import { CommentPost, Comments, PostModal, DeleteModal } from '../components'
+import { CommentPost, Comments, PostModal, DeletePostModal } from '../components'
 
-const Panel = ({ post, currentUser }) => {
+const Panel = ({ post, currentUser, refetch }) => {
     const [showCreate, setShowCreate] = useState(false)
     const [showComments, setShowComments] = useState(false)
     const handleCreate = () => setShowCreate(!showCreate)
@@ -17,7 +17,7 @@ const Panel = ({ post, currentUser }) => {
             <Box p="8" borderWidth="1px" borderRadius={8} shadow="sm">
                 <Flex justifyContent="space-between">
                     <Flex>
-                        <Avatar src="https://bit.ly/3mmsW3w" />
+                        <Avatar src="" />
                         <Box ml="3">
                             <Text fontWeight="bold">
                                 {post.User.username}
@@ -38,7 +38,10 @@ const Panel = ({ post, currentUser }) => {
                     {currentUser === post.User.id && (
                         <Flex>
                             <PostModal singlePost={post} />
-                            <DeleteModal singleId={post.id} />
+                            <DeletePostModal
+                                singleId={post.id}
+                                refetch={refetch}
+                            />
                         </Flex>
                     )}
                 </Flex>

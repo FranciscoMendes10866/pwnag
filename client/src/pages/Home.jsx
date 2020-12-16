@@ -19,7 +19,7 @@ const Home = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.post('sign_up', form)
+        await axios.post('auth/sign_up', form)
             .then(({ data }) => {
                 if (data.token) {
                     setToken(data.token)

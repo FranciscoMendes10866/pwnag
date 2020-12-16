@@ -10,12 +10,25 @@ import {
     ModalFooter
 } from '@chakra-ui/react'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
+import { useMutation } from 'react-query'
 
-const DeleteModal = ({ singleId }) => {
+import { useStore } from '../store'
+import DeletePostHandler from '../handlers/DeletePost'
+
+const DeletePostModal = ({ singleId, refetch }) => {
+    const stateToken = useStore(state => state.token)
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { mutate } = useMutation(DeletePostHandler, {
+        onSuccess: () => {
+            refetch()
+        }
+    })
     const handleOnDelete = (e) => {
         e.preventDefault()
-        console.log(singleId)
+        mutate({
+            id: singleId,
+            token: stateToken
+        })
         onClose()
     }
     return (
@@ -61,4 +74,4 @@ const DeleteModal = ({ singleId }) => {
     )
 }
 
-export default DeleteModal
+export default DeletePostModal
