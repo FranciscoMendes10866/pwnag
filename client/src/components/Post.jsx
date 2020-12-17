@@ -58,12 +58,18 @@ const Panel = ({ post, currentUser, refetch }) => {
                     </ButtonGroup>
                 </Flex>
                 <Divider mb={4} mt={4} />
-                <CommentPost showCreate={showCreate} />
+                <CommentPost
+                    singleId={post.id}
+                    showCreate={showCreate}
+                    refetch={refetch}
+                    setShowCreate={setShowCreate}
+                />
                 {common}
                 <Comments
                     showComments={showComments}
                     postComments={post.Comment}
                     currentUser={currentUser}
+                    refetch={refetch}
                 />
             </Box>
         </Box>

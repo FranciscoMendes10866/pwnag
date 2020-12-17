@@ -1,8 +1,8 @@
 import { Box, Flex, Avatar, Badge, Text, Collapse } from '@chakra-ui/react'
 
-import { CommentModal, DeletePostModal } from '.'
+import { CommentModal, DeleteCommentModal } from '.'
 
-const Comments = ({ showComments, postComments, currentUser }) => {
+const Comments = ({ showComments, postComments, currentUser, refetch }) => {
     return (
         <Collapse startingHeight={0} in={showComments}>
             {postComments.map(comment => {
@@ -30,8 +30,14 @@ const Comments = ({ showComments, postComments, currentUser }) => {
                             </Flex>
                             {currentUser === comment.User.id && (
                                 <Flex>
-                                    <CommentModal singleComment={comment} />
-                                    <DeletePostModal singleId={comment.id} />
+                                    <CommentModal
+                                        singleComment={comment}
+                                        refetch={refetch}
+                                    />
+                                    <DeleteCommentModal
+                                        singleId={comment.id}
+                                        refetch={refetch}
+                                    />
                                 </Flex>
                             )}
                         </Flex>

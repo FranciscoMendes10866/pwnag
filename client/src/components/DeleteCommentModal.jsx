@@ -7,49 +7,39 @@ import {
     ModalCloseButton,
     ModalHeader,
     ModalBody,
-    FormControl,
-    Input,
     ModalFooter
 } from '@chakra-ui/react'
-import { RiEditBoxLine } from 'react-icons/ri'
-import { useState } from 'react'
+import { RiDeleteBin6Fill } from 'react-icons/ri'
 import { useMutation } from 'react-query'
 
 import { useStore } from '../store'
-import UpdateCommentHandler from '../handlers/UpdateComment'
+import DeleteCommentHandler from '../handlers/DeleteComment'
 
-const CommentModal = ({ singleComment, refetch }) => {
+const DeleteCommentModal = ({ singleId, refetch }) => {
     const stateToken = useStore(state => state.token)
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [form, setForm] = useState({
-        message: singleComment.message,
-    })
-    const { mutate } = useMutation(UpdateCommentHandler, {
+    const { mutate } = useMutation(DeleteCommentHandler, {
         onSuccess: () => {
             refetch()
         }
     })
-    const handleOnChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value })
-    }
-    const handleOnSubmit = (e) => {
+    const handleOnDelete = (e) => {
         e.preventDefault()
         mutate({
-            id: singleComment.id,
-            body: form,
+            id: singleId,
             token: stateToken
         })
         onClose()
-    } 
+    }
     return (
         <>
             <Button
-            onClick={onOpen}
-            variant="ghost"
-            size="sm"
-            colorScheme="blue"
+                onClick={onOpen}
+                variant="ghost"
+                size="sm"
+                colorScheme="pink"
             >
-                <RiEditBoxLine />
+                <RiDeleteBin6Fill />
             </Button>
             <Modal
                 isOpen={isOpen}
@@ -57,31 +47,24 @@ const CommentModal = ({ singleComment, refetch }) => {
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Edit Comment</ModalHeader>
+                    <ModalHeader>Delete</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody pb={6}>
-                        <FormControl>
-                            <Input
-                                name="message"
-                                value={form.message}
-                                placeholder="Write the comment content."
-                                onChange={handleOnChange}
-                            />
-                        </FormControl>
+                    <ModalBody>
+                        <h1>Are you sure you want to delete this item?</h1>
                         <ModalFooter>
                             <Button
-                                colorScheme="purple"
+                                colorScheme="pink"
                                 mr={3}
-                                onClick={handleOnSubmit}
+                                onClick={handleOnDelete}
                             >
-                                Edit
+                                Yes
                             </Button>
                             <Button
                                 variant="ghost"
                                 colorScheme="purple"
                                 onClick={onClose}
                             >
-                                Close
+                                No
                             </Button>
                         </ModalFooter>
                     </ModalBody>
@@ -91,4 +74,4 @@ const CommentModal = ({ singleComment, refetch }) => {
     )
 }
 
-export default CommentModal
+export default DeleteCommentModal
