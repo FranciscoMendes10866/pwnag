@@ -37,7 +37,10 @@ const Panel = ({ post, currentUser, refetch }) => {
                     </Flex>
                     {currentUser === post.User.id && (
                         <Flex>
-                            <PostModal singlePost={post} />
+                            <PostModal
+                                singlePost={post}
+                                refetch={refetch}
+                            />
                             <DeletePostModal
                                 singleId={post.id}
                                 refetch={refetch}
